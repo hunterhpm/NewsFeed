@@ -1,12 +1,13 @@
 package newsFeed.model;
+
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-public class CPI extends Fetcher {
+public class PPI extends Fetcher {
 
-    private final CpiType type;
+    private final PpiType type;
 
-    public CPI(CpiType type) {
+    public PPI(PpiType type) {
         this.type = type;
     }
 
@@ -15,17 +16,17 @@ public class CPI extends Fetcher {
 
         String seriesId;
 
-        if (type == CpiType.MOM) {
-            seriesId = "CUSR0000SA0";
-        } else if (type == CpiType.YOY) {
-            seriesId = "CUUR0000SA0";
-        } else if (type == CpiType.CORE_MOM) {
-            seriesId = "CUSR0000SA0L1E";
-        } else if (type == CpiType.CORE_YOY) {
-            seriesId = "CUUR0000SA0L1E";
+        if (type == PpiType.MOM) {
+            seriesId = "WPSFD4";
+        } else if (type == PpiType.YOY) {
+            seriesId = "WPUFD4";
+        } else if (type == PpiType.CORE_MOM) {
+            seriesId = "WPSFD49104";
+        } else if (type == PpiType.CORE_YOY) {
+            seriesId = "WPUFD49104";
         } else {
             throw new UnsupportedOperationException(
-                    "CPI type not implemented: " + type
+                    "PPI type not implemented: " + type
             );
         }
 
@@ -48,11 +49,13 @@ public class CPI extends Fetcher {
             String month = latest.get("periodName").asText();
             String latestPeriod = latest.get("period").asText();
 
-            double latestValue = latest.get("value").asDouble();
+            double latestValue =
+                    latest.get("value").asDouble();
 
             double comparisonValue;
 
-            if (type == CpiType.MOM || type == CpiType.CORE_MOM) {
+            if (type == PpiType.MOM
+                    || type == PpiType.CORE_MOM) {
 
                 comparisonValue =
                         data.get(1)
@@ -61,19 +64,22 @@ public class CPI extends Fetcher {
 
             } else {
 
-                int latestYear = Integer.parseInt(year);
+                int latestYear =
+                        Integer.parseInt(year);
 
                 comparisonValue =
                         findYearAgoValue(
-                            data,
-                            latestYear - 1,
-                            latestPeriod
+                                data,
+                                latestYear - 1,
+                                latestPeriod
                         );
             }
 
-            double result = ((latestValue / comparisonValue) - 1) * 100;
+            double result =
+                    ((latestValue / comparisonValue) - 1) * 100;
 
-            String formattedResult = String.format("%.1f", result);
+            String formattedResult =
+                    String.format("%.1f", result);
 
             return new NewsEvent(
                     getLabel(),
@@ -95,33 +101,37 @@ public class CPI extends Fetcher {
 
         for (JsonNode item : data) {
 
-            String year = item.get("year").asText();
+            String year =
+                    item.get("year").asText();
 
-            String period = item.get("period").asText();
+            String period =
+                    item.get("period").asText();
 
             if (year.equals(String.valueOf(targetYear))
                     && period.equals(targetPeriod)) {
 
-                return item.get("value").asDouble();
-
+                return item
+                        .get("value")
+                        .asDouble();
             }
         }
 
-        throw new IllegalStateException("Could not find year-ago CPI value.");
-
+        throw new IllegalStateException(
+                "Could not find year-ago PPI value."
+        );
     }
 
     @Override
     protected String getLabel() {
 
-        if (type == CpiType.MOM) {
-            return "CPI m/m";
-        } else if (type == CpiType.YOY) {
-            return "CPI y/y";
-        } else if (type == CpiType.CORE_MOM) {
-            return "Core CPI m/m";
+        if (type == PpiType.MOM) {
+            return "PPI m/m";
+        } else if (type == PpiType.YOY) {
+            return "PPI y/y";
+        } else if (type == PpiType.CORE_MOM) {
+            return "Core PPI m/m";
         } else {
-            return "Core CPI y/y";
+            return "Core PPI y/y";
         }
     }
 }
