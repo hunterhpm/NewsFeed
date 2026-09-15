@@ -1,6 +1,6 @@
 package newsFeed.model;
 
-public enum PpiType {
+public enum PPIType {
     MOM,
     YOY,
     CORE_MOM,

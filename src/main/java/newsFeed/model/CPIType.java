@@ -1,6 +1,6 @@
 package newsFeed.model;
 
-public enum CpiType {
+public enum CPIType {
     MOM,
     YOY,
     CORE_MOM,

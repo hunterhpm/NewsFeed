@@ -4,9 +4,9 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class CPI extends Fetcher {
 
-    private final CpiType type;
+    private final CPIType type;
 
-    public CPI(CpiType type) {
+    public CPI(CPIType type) {
         this.type = type;
     }
 
@@ -15,13 +15,13 @@ public class CPI extends Fetcher {
 
         String seriesId;
 
-        if (type == CpiType.MOM) {
+        if (type == CPIType.MOM) {
             seriesId = "CUSR0000SA0";
-        } else if (type == CpiType.YOY) {
+        } else if (type == CPIType.YOY) {
             seriesId = "CUUR0000SA0";
-        } else if (type == CpiType.CORE_MOM) {
+        } else if (type == CPIType.CORE_MOM) {
             seriesId = "CUSR0000SA0L1E";
-        } else if (type == CpiType.CORE_YOY) {
+        } else if (type == CPIType.CORE_YOY) {
             seriesId = "CUUR0000SA0L1E";
         } else {
             throw new UnsupportedOperationException(
@@ -52,7 +52,7 @@ public class CPI extends Fetcher {
 
             double comparisonValue;
 
-            if (type == CpiType.MOM || type == CpiType.CORE_MOM) {
+            if (type == CPIType.MOM || type == CPIType.CORE_MOM) {
 
                 comparisonValue =
                         data.get(1)
@@ -114,11 +114,11 @@ public class CPI extends Fetcher {
     @Override
     protected String getLabel() {
 
-        if (type == CpiType.MOM) {
+        if (type == CPIType.MOM) {
             return "CPI m/m";
-        } else if (type == CpiType.YOY) {
+        } else if (type == CPIType.YOY) {
             return "CPI y/y";
-        } else if (type == CpiType.CORE_MOM) {
+        } else if (type == CPIType.CORE_MOM) {
             return "Core CPI m/m";
         } else {
             return "Core CPI y/y";

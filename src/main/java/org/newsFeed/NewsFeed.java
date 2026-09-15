@@ -5,7 +5,7 @@ public class NewsFeed {
 
     public static void main(String[] args) {
 
-        Fetcher event = new PPI(PpiType.MOM);
+        Fetcher event = new PPI(PPIType.MOM);
 
         event.watchForNewEvents();
 

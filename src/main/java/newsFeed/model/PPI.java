@@ -5,9 +5,9 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class PPI extends Fetcher {
 
-    private final PpiType type;
+    private final PPIType type;
 
-    public PPI(PpiType type) {
+    public PPI(PPIType type) {
         this.type = type;
     }
 
@@ -16,13 +16,13 @@ public class PPI extends Fetcher {
 
         String seriesId;
 
-        if (type == PpiType.MOM) {
+        if (type == PPIType.MOM) {
             seriesId = "WPSFD4";
-        } else if (type == PpiType.YOY) {
+        } else if (type == PPIType.YOY) {
             seriesId = "WPUFD4";
-        } else if (type == PpiType.CORE_MOM) {
+        } else if (type == PPIType.CORE_MOM) {
             seriesId = "WPSFD49104";
-        } else if (type == PpiType.CORE_YOY) {
+        } else if (type == PPIType.CORE_YOY) {
             seriesId = "WPUFD49104";
         } else {
             throw new UnsupportedOperationException(
@@ -53,7 +53,7 @@ public class PPI extends Fetcher {
 
             double comparisonValue;
 
-            if (type == PpiType.MOM || type == PpiType.CORE_MOM) {
+            if (type == PPIType.MOM || type == PPIType.CORE_MOM) {
 
                 comparisonValue =
                         data.get(1)
@@ -119,11 +119,11 @@ public class PPI extends Fetcher {
     @Override
     protected String getLabel() {
 
-        if (type == PpiType.MOM) {
+        if (type == PPIType.MOM) {
             return "PPI m/m";
-        } else if (type == PpiType.YOY) {
+        } else if (type == PPIType.YOY) {
             return "PPI y/y";
-        } else if (type == PpiType.CORE_MOM) {
+        } else if (type == PPIType.CORE_MOM) {
             return "Core PPI m/m";
         } else {
             return "Core PPI y/y";
