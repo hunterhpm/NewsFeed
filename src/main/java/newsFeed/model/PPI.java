@@ -49,13 +49,11 @@ public class PPI extends Fetcher {
             String month = latest.get("periodName").asText();
             String latestPeriod = latest.get("period").asText();
 
-            double latestValue =
-                    latest.get("value").asDouble();
+            double latestValue = latest.get("value").asDouble();
 
             double comparisonValue;
 
-            if (type == PpiType.MOM
-                    || type == PpiType.CORE_MOM) {
+            if (type == PpiType.MOM || type == PpiType.CORE_MOM) {
 
                 comparisonValue =
                         data.get(1)
@@ -64,8 +62,7 @@ public class PPI extends Fetcher {
 
             } else {
 
-                int latestYear =
-                        Integer.parseInt(year);
+                int latestYear = Integer.parseInt(year);
 
                 comparisonValue =
                         findYearAgoValue(
@@ -75,11 +72,9 @@ public class PPI extends Fetcher {
                         );
             }
 
-            double result =
-                    ((latestValue / comparisonValue) - 1) * 100;
+            double result = ((latestValue / comparisonValue) - 1) * 100;
 
-            String formattedResult =
-                    String.format("%.1f", result);
+            String formattedResult = String.format("%.1f", result);
 
             return new NewsEvent(
                     getLabel(),
