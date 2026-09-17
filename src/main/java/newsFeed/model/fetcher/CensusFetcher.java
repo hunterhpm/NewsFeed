@@ -1,4 +1,4 @@
-package newsFeed.model;
+package newsFeed.model.fetcher;
 
 import java.io.IOException;
 import java.net.URI;
@@ -29,10 +29,9 @@ public abstract class CensusFetcher extends Fetcher {
                         + "&category_code=" + categoryCode
                         + "&data_type_code=" + dataTypeCode
                         + "&seasonally_adj=yes"
-                        + "&time=from+2025"
+                        + "&for=us:*"
+                        + "&time=2026"
                         + "&key=" + CENSUS_API_KEY;
-
-        HttpClient client = HttpClient.newHttpClient();
 
         HttpRequest request = HttpRequest.newBuilder()
                 .uri(URI.create(url))
@@ -40,7 +39,7 @@ public abstract class CensusFetcher extends Fetcher {
                 .build();
 
         try {
-            HttpResponse<String> response = client.send(
+            HttpResponse<String> response = HTTP_CLIENT.send(
                     request,
                     HttpResponse.BodyHandlers.ofString()
             );

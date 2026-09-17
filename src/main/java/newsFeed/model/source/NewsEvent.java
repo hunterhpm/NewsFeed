@@ -1,4 +1,4 @@
-package newsFeed.model;
+package newsFeed.model.source;
 
 public record NewsEvent(
         String name,
